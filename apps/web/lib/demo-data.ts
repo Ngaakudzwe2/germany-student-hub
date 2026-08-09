@@ -86,6 +86,18 @@ export const DEMO_TASKS: DemoTask[] = [
 
 export type VenueType = 'online' | 'in_person';
 
+export interface EventAttendee {
+  name: string;
+  initials: string;
+  university: string;
+  program: string;
+}
+
+export interface AgendaItem {
+  time: string;
+  item: string;
+}
+
 export interface DemoEvent {
   id: string;
   title: string;
@@ -99,7 +111,8 @@ export interface DemoEvent {
   coverPhotoIds: string[];
   recapPhotoIds: string[];
   attendeeCount: number;
-  attendeeInitials: string[];
+  attendees: EventAttendee[];
+  agenda: AgendaItem[];
   capacity: number | null;
   hostName: string;
   hostType: string;
@@ -143,7 +156,18 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 24,
-    attendeeInitials: ['LF', 'JM', 'AK', 'SR'],
+    attendees: [
+      { name: 'Lena Fischer', initials: 'LF', university: 'TU Berlin', program: 'B.A. Linguistics' },
+      { name: 'Jonas Meyer', initials: 'JM', university: 'Freie Universität Berlin', program: 'M.Sc. Data Science' },
+      { name: 'Aisha Khan', initials: 'AK', university: 'TU Berlin', program: 'B.Sc. Computer Science' },
+      { name: 'Sofia Rossi', initials: 'SR', university: 'Humboldt University', program: 'Erasmus Exchange' },
+    ],
+    agenda: [
+      { time: '18:00', item: 'Doors open & name-tag mingling' },
+      { time: '18:30', item: 'Speed language exchange rounds' },
+      { time: '19:30', item: 'Free conversation over coffee' },
+      { time: '20:00', item: "Wrap-up & next week's topic" },
+    ],
     capacity: 30,
     hostName: 'Lena Fischer',
     hostType: 'Hosted by Local Student',
@@ -172,7 +196,18 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 41,
-    attendeeInitials: ['KM', 'PT', 'NV', 'HC'],
+    attendees: [
+      { name: 'Karan Mehta', initials: 'KM', university: 'LMU Munich', program: 'M.Sc. Business Informatics' },
+      { name: 'Priya Tandon', initials: 'PT', university: 'TU Munich', program: 'M.Sc. Mechanical Engineering' },
+      { name: 'Niklas Vogel', initials: 'NV', university: 'LMU Munich', program: 'B.A. Economics' },
+      { name: 'Hana Choi', initials: 'HC', university: 'TU Munich', program: 'M.Sc. Computer Science' },
+    ],
+    agenda: [
+      { time: '17:30', item: 'Registration & networking' },
+      { time: '18:00', item: 'Recruiter lightning intros' },
+      { time: '18:45', item: 'Open networking with recruiters' },
+      { time: '20:00', item: 'Closing remarks' },
+    ],
     capacity: 50,
     hostName: 'Karan Mehta',
     hostType: 'Hosted by Career Services',
@@ -202,7 +237,18 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 63,
-    attendeeInitials: ['DC', 'YW', 'RS', 'IL'],
+    attendees: [
+      { name: 'Daniel Cruz', initials: 'DC', university: 'TU Berlin', program: 'B.Sc. Computer Science' },
+      { name: 'Yuki Watanabe', initials: 'YW', university: 'Freie Universität Berlin', program: 'M.Sc. Data Science' },
+      { name: 'Ravi Shah', initials: 'RS', university: 'TU Berlin', program: 'B.Sc. Electrical Engineering' },
+      { name: 'Ines Lund', initials: 'IL', university: 'HTW Berlin', program: 'B.Sc. Media Informatics' },
+    ],
+    agenda: [
+      { time: 'Sat 09:00', item: 'Kickoff & team formation' },
+      { time: 'Sat 10:00', item: 'Building begins' },
+      { time: 'Sun 14:00', item: 'Project demos' },
+      { time: 'Sun 16:00', item: 'Judging & prizes' },
+    ],
     capacity: 80,
     hostName: 'Berlin Student Devs',
     hostType: 'Hosted by Student Club',
@@ -232,7 +278,17 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 11,
-    attendeeInitials: ['MB', 'OT', 'CS'],
+    attendees: [
+      { name: 'Marco Bianchi', initials: 'MB', university: 'Goethe University Frankfurt', program: 'M.Sc. Finance' },
+      { name: 'Olamide Taiwo', initials: 'OT', university: 'Goethe University Frankfurt', program: 'B.A. International Business' },
+      { name: 'Chloe Simmons', initials: 'CS', university: 'Frankfurt School of Finance', program: 'Exchange Student' },
+    ],
+    agenda: [
+      { time: '11:00', item: 'Meet at Bockenheimer Warte' },
+      { time: '11:15', item: 'Viewing #1' },
+      { time: '12:00', item: 'Viewing #2' },
+      { time: '12:45', item: 'Viewing #3 & wrap-up' },
+    ],
     capacity: 15,
     hostName: 'International Office Frankfurt',
     hostType: 'Hosted by University',
@@ -261,7 +317,17 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 18,
-    attendeeInitials: ['SA', 'TR', 'EP'],
+    attendees: [
+      { name: 'Sofia Alvarez', initials: 'SA', university: 'University of Cologne', program: 'M.A. Media Studies' },
+      { name: 'Tobias Richter', initials: 'TR', university: 'University of Cologne', program: 'B.Sc. Biology' },
+      { name: 'Elena Petrova', initials: 'EP', university: 'TH Köln', program: 'M.Sc. Engineering' },
+    ],
+    agenda: [
+      { time: '08:00', item: 'Meet at Cologne Hbf' },
+      { time: '08:30', item: 'Carpool departure' },
+      { time: '09:30', item: 'Hike begins' },
+      { time: '15:00', item: 'Return to Cologne' },
+    ],
     capacity: 20,
     hostName: 'Sofia Alvarez',
     hostType: 'Hosted by Local Student',
@@ -290,7 +356,16 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 9,
-    attendeeInitials: ['WZ', 'FL'],
+    attendees: [
+      { name: 'Wei Zhang', initials: 'WZ', university: 'TU Munich', program: 'M.Sc. Mathematics' },
+      { name: 'Felix Lang', initials: 'FL', university: 'TU Munich', program: 'B.Sc. Physics' },
+    ],
+    agenda: [
+      { time: '16:00', item: 'Recap of eigenvalues' },
+      { time: '16:45', item: 'Practice problems' },
+      { time: '17:30', item: 'Q&A and vector spaces' },
+      { time: '18:00', item: 'Wrap-up' },
+    ],
     capacity: 15,
     hostName: 'Wei Zhang',
     hostType: 'Hosted by Local Student',
@@ -319,7 +394,18 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 35,
-    attendeeInitials: ['FZ', 'GM', 'AB', 'NK'],
+    attendees: [
+      { name: 'Fatima Zahra', initials: 'FZ', university: 'Humboldt University', program: 'M.A. Global History' },
+      { name: 'Giulia Moretti', initials: 'GM', university: 'Humboldt University', program: 'Erasmus Exchange' },
+      { name: 'Ahmed Bakr', initials: 'AB', university: 'Freie Universität Berlin', program: 'M.Sc. Public Policy' },
+      { name: 'Noor Khan', initials: 'NK', university: 'TU Berlin', program: 'B.Sc. Architecture' },
+    ],
+    agenda: [
+      { time: '18:00', item: 'Dish drop-off & setup' },
+      { time: '18:30', item: 'Doors open, food served' },
+      { time: '19:15', item: 'Cultural show & tell' },
+      { time: '21:00', item: 'Wind down' },
+    ],
     capacity: 40,
     hostName: 'Fatima Zahra',
     hostType: 'Hosted by Local Student',
@@ -348,7 +434,18 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 87,
-    attendeeInitials: ['ES', 'JB', 'LT', 'PK'],
+    attendees: [
+      { name: 'Erik Sørensen', initials: 'ES', university: 'University of Hamburg', program: 'Erasmus Exchange' },
+      { name: 'Julia Braun', initials: 'JB', university: 'University of Hamburg', program: 'B.A. Media & Communication' },
+      { name: 'Leo Tan', initials: 'LT', university: 'HAW Hamburg', program: 'B.Sc. Logistics' },
+      { name: 'Priya Kapoor', initials: 'PK', university: 'TU Hamburg', program: 'M.Sc. Data Engineering' },
+    ],
+    agenda: [
+      { time: '22:00', item: 'Doors open' },
+      { time: '22:30', item: 'Welcome toast' },
+      { time: '23:00', item: 'DJ set begins' },
+      { time: '02:00', item: 'Last call' },
+    ],
     capacity: 120,
     hostName: 'Erasmus Student Network Hamburg',
     hostType: 'Hosted by Student Network',
@@ -378,7 +475,16 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 14,
-    attendeeInitials: ['TR', 'MK'],
+    attendees: [
+      { name: 'Tomás Ribeiro', initials: 'TR', university: 'University of Cologne', program: 'M.Sc. Sports Science' },
+      { name: 'Max Keller', initials: 'MK', university: 'TH Köln', program: 'B.Sc. Mechanical Engineering' },
+    ],
+    agenda: [
+      { time: '10:00', item: 'Warm-up' },
+      { time: '10:15', item: 'Match 1' },
+      { time: '10:45', item: 'Match 2' },
+      { time: '11:15', item: 'Cool down & snacks' },
+    ],
     capacity: 20,
     hostName: 'Tomás Ribeiro',
     hostType: 'Hosted by Local Student',
@@ -407,7 +513,16 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 22,
-    attendeeInitials: ['CS', 'TB'],
+    attendees: [
+      { name: 'Clara Schmidt', initials: 'CS', university: 'TU Berlin', program: 'B.Sc. Industrial Engineering' },
+      { name: 'Tariq Bello', initials: 'TB', university: 'TU Berlin', program: 'M.Sc. Renewable Energy' },
+    ],
+    agenda: [
+      { time: '17:00', item: 'Intro & German CV norms' },
+      { time: '17:20', item: 'Live CV teardown examples' },
+      { time: '17:50', item: '1-on-1 feedback rounds' },
+      { time: '18:30', item: 'Q&A' },
+    ],
     capacity: 25,
     hostName: 'Career Services TU Berlin',
     hostType: 'Hosted by University',

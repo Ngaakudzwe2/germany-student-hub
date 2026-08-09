@@ -13,6 +13,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import type { EventTopic } from '@repo/shared';
+import type { DemoEvent } from './demo-data';
 
 export const EVENT_TOPIC_ICON: Record<EventTopic, LucideIcon> = {
   language_exchange: MessagesSquare,
@@ -24,18 +25,6 @@ export const EVENT_TOPIC_ICON: Record<EventTopic, LucideIcon> = {
   academic: GraduationCap,
   cultural: Landmark,
   other: Sparkles,
-};
-
-export const EVENT_TOPIC_GRADIENT: Record<EventTopic, string> = {
-  language_exchange: 'from-emerald-500 to-teal-400',
-  career_networking: 'from-indigo-500 to-violet-500',
-  tech: 'from-blue-500 to-indigo-500',
-  wg_search: 'from-orange-500 to-amber-400',
-  nightlife: 'from-fuchsia-500 to-pink-500',
-  sports: 'from-lime-500 to-emerald-400',
-  academic: 'from-cyan-500 to-blue-500',
-  cultural: 'from-rose-500 to-orange-400',
-  other: 'from-zinc-500 to-zinc-400',
 };
 
 export const EVENT_TOPIC_BADGE: Record<EventTopic, string> = {
@@ -127,3 +116,61 @@ export const TIME_OF_DAY_LABELS: Record<TimeOfDay, string> = {
   evening: 'Evening',
   night: 'Night',
 };
+
+function eventTimeRange(event: DemoEvent) {
+  const start = new Date(event.startsAt);
+  const end = new Date(start.getTime() + EVENT_DURATION_HOURS * HOUR_MS);
+  return { start, end };
+}
+
+const icsDate = (d: Date) => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+export function googleMapsUrl(event: DemoEvent): string {
+  const query = encodeURIComponent(`${event.venue}, ${event.city}, Germany`);
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
+
+export function googleCalendarUrl(event: DemoEvent): string {
+  const { start, end } = eventTimeRange(event);
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: event.title,
+    dates: `${icsDate(start)}/${icsDate(end)}`,
+    details: event.description,
+    location: `${event.venue}, ${event.city}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+function escapeIcsText(text: string): string {
+  return text.replace(/[\\,;]/g, (match) => `\\${match}`).replace(/\n/g, '\\n');
+}
+
+export function buildIcsFile(event: DemoEvent): string {
+  const { start, end } = eventTimeRange(event);
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Germany Student Hub//Meetups//EN',
+    'BEGIN:VEVENT',
+    `UID:${event.id}@germanystudenthub.example`,
+    `DTSTAMP:${icsDate(new Date())}`,
+    `DTSTART:${icsDate(start)}`,
+    `DTEND:${icsDate(end)}`,
+    `SUMMARY:${escapeIcsText(event.title)}`,
+    `DESCRIPTION:${escapeIcsText(event.description)}`,
+    `LOCATION:${escapeIcsText(`${event.venue}, ${event.city}`)}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+}
+
+export function downloadIcsFile(event: DemoEvent) {
+  const blob = new Blob([buildIcsFile(event)], { type: 'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${event.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+}

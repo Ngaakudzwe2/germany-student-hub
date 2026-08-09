@@ -1,14 +1,27 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
-import { AlertTriangle, Building2, Calendar, CheckCircle2, ExternalLink, MapPin, Users } from 'lucide-react';
+import { AlertTriangle, Building2, Calendar, Check, ExternalLink, MapPin, Users } from 'lucide-react';
 import { DEMO_EVENTS, DEMO_LISTINGS, DEMO_TASKS, DEMO_USER_NAME } from '@/lib/demo-data';
 import { unsplashUrl } from '@/lib/event-meta';
 import { getTaskDetail } from '@/lib/task-meta';
+import { EventDetailsModal } from '@/components/events/event-details-modal';
 
 export function AppPreviewScreen() {
   const nextTask = DEMO_TASKS.find((t) => t.status !== 'completed') ?? DEMO_TASKS[0];
   const listing = DEMO_LISTINGS[0];
   const event = [...DEMO_EVENTS].sort((a, b) => a.startsAt.localeCompare(b.startsAt))[0];
   const taskDetail = nextTask ? getTaskDetail(nextTask.task_templates.category) : null;
+
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [attending, setAttending] = useState(false);
+  const [attendeeCount, setAttendeeCount] = useState(event?.attendeeCount ?? 0);
+
+  function toggleRsvp() {
+    setAttending((prev) => !prev);
+    setAttendeeCount((count) => count + (attending ? -1 : 1));
+  }
 
   return (
     <div>
@@ -71,7 +84,19 @@ export function AppPreviewScreen() {
           Next Meetup
         </p>
         {event && (
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label={`View details for ${event.title}`}
+            onClick={() => setDetailsOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setDetailsOpen(true);
+              }
+            }}
+            className="cursor-pointer rounded-xl border border-white/10 bg-white/[0.02] p-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+          >
             <p className="text-xs font-medium text-zinc-100">{event.title}</p>
             <p className="mt-0.5 flex items-center gap-1 text-[11px] text-zinc-500">
               <Calendar className="h-3 w-3" />
@@ -84,14 +109,30 @@ export function AppPreviewScreen() {
             </p>
             <button
               type="button"
-              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 py-2 text-xs font-medium text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleRsvp();
+              }}
+              className={`mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-colors ${
+                attending
+                  ? 'bg-indigo-500/15 text-indigo-300 ring-1 ring-indigo-500/30'
+                  : 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white'
+              }`}
             >
-              <CheckCircle2 className="h-3 w-3" />
-              RSVP
+              <Check className="h-3 w-3" />
+              {attending ? 'Attending' : 'RSVP'}
             </button>
           </div>
         )}
       </section>
+
+      <EventDetailsModal
+        event={detailsOpen && event ? event : null}
+        attending={attending}
+        attendeeCount={attendeeCount}
+        onToggleRsvp={toggleRsvp}
+        onClose={() => setDetailsOpen(false)}
+      />
     </div>
   );
 }

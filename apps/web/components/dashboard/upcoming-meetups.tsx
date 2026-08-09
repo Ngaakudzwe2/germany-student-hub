@@ -1,13 +1,36 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Users } from 'lucide-react';
-import { DEMO_EVENTS } from '@/lib/demo-data';
+import { DEMO_EVENTS, type DemoEvent } from '@/lib/demo-data';
 import { unsplashUrl } from '@/lib/event-meta';
+import { EventDetailsModal } from '@/components/events/event-details-modal';
+
+interface Attendance {
+  attending: boolean;
+  count: number;
+}
 
 export function UpcomingMeetups({ limit = 3 }: { limit?: number }) {
-  const events = [...DEMO_EVENTS]
-    .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
-    .slice(0, limit);
+  const events = [...DEMO_EVENTS].sort((a, b) => a.startsAt.localeCompare(b.startsAt)).slice(0, limit);
+  const [activeEvent, setActiveEvent] = useState<DemoEvent | null>(null);
+  const [attendance, setAttendance] = useState<Record<string, Attendance>>({});
+
+  function getAttendance(event: DemoEvent): Attendance {
+    return attendance[event.id] ?? { attending: false, count: event.attendeeCount };
+  }
+
+  function toggleRsvp(event: DemoEvent) {
+    setAttendance((prev) => {
+      const current = prev[event.id] ?? { attending: false, count: event.attendeeCount };
+      const next = !current.attending;
+      return { ...prev, [event.id]: { attending: next, count: current.count + (next ? 1 : -1) } };
+    });
+  }
+
+  const activeAttendance = activeEvent ? getAttendance(activeEvent) : null;
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
@@ -33,9 +56,11 @@ export function UpcomingMeetups({ limit = 3 }: { limit?: number }) {
           });
           return (
             <li key={event.id}>
-              <Link
-                href="/meetups"
-                className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-white/5"
+              <button
+                type="button"
+                onClick={() => setActiveEvent(event)}
+                aria-label={`View details for ${event.title}`}
+                className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-white/5"
               >
                 <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg">
                   <Image
@@ -53,11 +78,19 @@ export function UpcomingMeetups({ limit = 3 }: { limit?: number }) {
                     {event.city} · {dateLabel}
                   </p>
                 </div>
-              </Link>
+              </button>
             </li>
           );
         })}
       </ul>
+
+      <EventDetailsModal
+        event={activeEvent}
+        attending={activeAttendance?.attending ?? false}
+        attendeeCount={activeAttendance?.count ?? activeEvent?.attendeeCount ?? 0}
+        onToggleRsvp={() => activeEvent && toggleRsvp(activeEvent)}
+        onClose={() => setActiveEvent(null)}
+      />
     </div>
   );
 }
