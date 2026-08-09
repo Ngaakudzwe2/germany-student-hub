@@ -696,6 +696,7 @@ export interface DemoJob {
   requirements: string[];
   postedAt: string;
   heroPhotoId: string;
+  applicationUrl: string;
 }
 
 const hoursAgoISO = (n: number) => new Date(Date.now() - n * 3_600_000).toISOString();
@@ -723,6 +724,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(3),
     heroPhotoId: '1522071820081-009f0129c71c',
+    applicationUrl: 'https://www.stepstone.de/jobs/suche?ke=Werkstudent+Software+Engineer',
   },
   {
     id: 'demo-job-barista-minijob-munich',
@@ -746,6 +748,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(20),
     heroPhotoId: '1521017432531-fbd92d768814',
+    applicationUrl: 'https://www.zenjob.com/de/',
   },
   {
     id: 'demo-job-marketing-werkstudent-hamburg',
@@ -769,6 +772,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(48),
     heroPhotoId: '1497366216548-37526070297c',
+    applicationUrl: 'https://www.stepstone.de/jobs/suche?ke=Werkstudent+Marketing',
   },
   {
     id: 'demo-job-warehouse-minijob-cologne',
@@ -792,6 +796,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(72),
     heroPhotoId: '1553413077-190dd305871c',
+    applicationUrl: 'https://www.zenjob.com/de/',
   },
   {
     id: 'demo-job-data-analyst-remote',
@@ -815,6 +820,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(6),
     heroPhotoId: '1499951360447-b19be8fe80f5',
+    applicationUrl: 'https://www.linkedin.com/jobs/',
   },
   {
     id: 'demo-job-tutor-minijob-frankfurt',
@@ -838,6 +844,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(30),
     heroPhotoId: '1524995997946-a1c2e315a42f',
+    applicationUrl: 'https://de.indeed.com/',
   },
   {
     id: 'demo-job-ux-werkstudent-berlin',
@@ -861,6 +868,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(15),
     heroPhotoId: '1517694712202-14dd9538aa97',
+    applicationUrl: 'https://www.arbeitsagentur.de/jobsuche/',
   },
   {
     id: 'demo-job-delivery-minijob-munich',
@@ -884,6 +892,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(10),
     heroPhotoId: '1571771894821-ce9b6c11b08e',
+    applicationUrl: 'https://www.zenjob.com/de/',
   },
   {
     id: 'demo-job-support-werkstudent-remote',
@@ -907,6 +916,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(1),
     heroPhotoId: '1532094349884-543bc11b234d',
+    applicationUrl: 'https://www.stepstone.de/jobs/suche?ke=Werkstudent+Customer+Support',
   },
   {
     id: 'demo-job-reception-minijob-hamburg',
@@ -930,6 +940,7 @@ export const DEMO_JOBS: DemoJob[] = [
     ],
     postedAt: hoursAgoISO(55),
     heroPhotoId: '1445019980597-93fa8acb246c',
+    applicationUrl: 'https://de.indeed.com/',
   },
 ];
 

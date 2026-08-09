@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { ExternalLink, Clock, ListChecks, MapPin, Sparkles } from 'lucide-react';
 import Image from 'next/image';
-import { Check, Clock, ListChecks, MapPin, Send, Sparkles } from 'lucide-react';
 import type { DemoJob } from '@/lib/demo-data';
 import { GERMAN_LEVEL_LABELS, JOB_CATEGORY_LABELS } from '@/lib/job-meta';
 import { avatarColor, unsplashUrl } from '@/lib/event-meta';
 import { Modal } from '@/components/ui/modal';
-import { useToast } from '@/components/ui/toast';
 
 interface JobModalProps {
   job: DemoJob | null;
@@ -16,15 +14,7 @@ interface JobModalProps {
 }
 
 export function JobModal({ job, onClose, onUseInGenerator }: JobModalProps) {
-  const [applied, setApplied] = useState(false);
-  const { showToast } = useToast();
-
   if (!job) return null;
-
-  function handleApply() {
-    setApplied(true);
-    showToast(`Application sent to ${job!.company} (demo)`);
-  }
 
   return (
     <Modal open={!!job} onClose={onClose} title={job.title} subtitle={job.company}>
@@ -100,28 +90,15 @@ export function JobModal({ job, onClose, onUseInGenerator }: JobModalProps) {
         </section>
 
         <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={handleApply}
-            disabled={applied}
-            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold transition-colors ${
-              applied
-                ? 'bg-emerald-500/15 text-emerald-300'
-                : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950'
-            }`}
+          <a
+            href={job.applicationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 py-3 text-sm font-semibold text-zinc-950 transition-opacity hover:opacity-90"
           >
-            {applied ? (
-              <>
-                <Check className="h-4 w-4" />
-                Application Sent
-              </>
-            ) : (
-              <>
-                <Send className="h-4 w-4" />
-                Apply Now
-              </>
-            )}
-          </button>
+            <ExternalLink className="h-4 w-4" />
+            Apply Now
+          </a>
           <button
             type="button"
             onClick={() => onUseInGenerator(job)}
@@ -132,7 +109,7 @@ export function JobModal({ job, onClose, onUseInGenerator }: JobModalProps) {
           </button>
         </div>
         <p className="-mt-4 text-center text-[11px] text-zinc-600">
-          Demo listing — applying here doesn&apos;t reach a real employer.
+          Opens the employer&apos;s application portal in a new tab.
         </p>
       </div>
     </Modal>
