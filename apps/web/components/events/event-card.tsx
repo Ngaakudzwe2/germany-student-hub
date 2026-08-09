@@ -25,13 +25,17 @@ export function EventCard({ event }: { event: DemoEvent }) {
   const [now] = useState(() => Date.now());
   const { showToast } = useToast();
 
+  const state = getEventState(event.startsAt, now);
+  const isPast = state === 'past';
+  const photoIds = isPast ? event.recapPhotoIds : event.coverPhotoIds;
+
   useEffect(() => {
-    if (event.coverPhotoIds.length <= 1) return;
+    if (photoIds.length <= 1) return;
     const id = setInterval(() => {
-      setPhotoIndex((i) => (i + 1) % event.coverPhotoIds.length);
+      setPhotoIndex((i) => (i + 1) % photoIds.length);
     }, CAROUSEL_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [event.coverPhotoIds.length]);
+  }, [photoIds.length]);
 
   const date = new Date(event.startsAt);
   const dateLabel = date.toLocaleDateString('en-US', {
@@ -43,7 +47,6 @@ export function EventCard({ event }: { event: DemoEvent }) {
   const TopicIcon = EVENT_TOPIC_ICON[event.topic];
   const visibleAvatars = event.attendeeInitials.slice(0, 4);
   const extraCount = Math.max(attendeeCount - visibleAvatars.length, 0);
-  const state = getEventState(event.startsAt, now);
   const stateMeta = EVENT_STATE_META[state];
 
   function toggleRsvp() {
@@ -59,14 +62,14 @@ export function EventCard({ event }: { event: DemoEvent }) {
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-colors hover:border-white/20">
       <div className="relative h-40 w-full overflow-hidden">
-        {event.coverPhotoIds.map((photoId, i) => (
+        {photoIds.map((photoId, i) => (
           <Image
             key={photoId}
             src={unsplashUrl(photoId, 640)}
             alt=""
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-opacity duration-700 ease-in-out"
+            className={`object-cover transition-opacity duration-700 ease-in-out ${isPast ? 'grayscale-[35%]' : ''}`}
             style={{ opacity: i === photoIndex ? 1 : 0 }}
             priority={i === 0}
           />
@@ -88,9 +91,15 @@ export function EventCard({ event }: { event: DemoEvent }) {
           </span>
         )}
 
-        {event.coverPhotoIds.length > 1 && (
+        {isPast && (
+          <span className="absolute bottom-2 left-3 rounded-full bg-black/40 px-2 py-0.5 text-[10px] text-white/80 backdrop-blur-sm">
+            Recap photos
+          </span>
+        )}
+
+        {photoIds.length > 1 && (
           <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1">
-            {event.coverPhotoIds.map((photoId, i) => (
+            {photoIds.map((photoId, i) => (
               <span
                 key={photoId}
                 className={`h-1 rounded-full transition-all ${
@@ -157,14 +166,16 @@ export function EventCard({ event }: { event: DemoEvent }) {
           <button
             type="button"
             onClick={toggleRsvp}
-            disabled={!attending && spotsLeft === 0}
+            disabled={isPast || (!attending && spotsLeft === 0)}
             className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
               attending
                 ? 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/30'
                 : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950'
             }`}
           >
-            {attending ? (
+            {isPast ? (
+              'Event Ended'
+            ) : attending ? (
               <>
                 <Check className="h-3.5 w-3.5" />
                 Attending

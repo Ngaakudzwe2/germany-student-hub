@@ -1,19 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Clock, ListChecks, MapPin, Send } from 'lucide-react';
+import Image from 'next/image';
+import { Check, Clock, ListChecks, MapPin, Send, Sparkles } from 'lucide-react';
 import type { DemoJob } from '@/lib/demo-data';
 import { GERMAN_LEVEL_LABELS, JOB_CATEGORY_LABELS } from '@/lib/job-meta';
-import { avatarColor } from '@/lib/event-meta';
+import { avatarColor, unsplashUrl } from '@/lib/event-meta';
 import { Modal } from '@/components/ui/modal';
 import { useToast } from '@/components/ui/toast';
 
 interface JobModalProps {
   job: DemoJob | null;
   onClose: () => void;
+  onUseInGenerator: (job: DemoJob) => void;
 }
 
-export function JobModal({ job, onClose }: JobModalProps) {
+export function JobModal({ job, onClose, onUseInGenerator }: JobModalProps) {
   const [applied, setApplied] = useState(false);
   const { showToast } = useToast();
 
@@ -27,6 +29,17 @@ export function JobModal({ job, onClose }: JobModalProps) {
   return (
     <Modal open={!!job} onClose={onClose} title={job.title} subtitle={job.company}>
       <div className="space-y-6">
+        <div className="relative h-32 w-full overflow-hidden rounded-xl">
+          <Image
+            src={unsplashUrl(job.heroPhotoId, 640)}
+            alt=""
+            fill
+            sizes="512px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+
         <div className="flex items-center gap-3">
           <span
             className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-white ${avatarColor(job.company)}`}
@@ -86,28 +99,38 @@ export function JobModal({ job, onClose }: JobModalProps) {
           </ul>
         </section>
 
-        <button
-          type="button"
-          onClick={handleApply}
-          disabled={applied}
-          className={`flex w-full items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold transition-colors ${
-            applied
-              ? 'bg-emerald-500/15 text-emerald-300'
-              : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950'
-          }`}
-        >
-          {applied ? (
-            <>
-              <Check className="h-4 w-4" />
-              Application Sent
-            </>
-          ) : (
-            <>
-              <Send className="h-4 w-4" />
-              Apply Now
-            </>
-          )}
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleApply}
+            disabled={applied}
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold transition-colors ${
+              applied
+                ? 'bg-emerald-500/15 text-emerald-300'
+                : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950'
+            }`}
+          >
+            {applied ? (
+              <>
+                <Check className="h-4 w-4" />
+                Application Sent
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4" />
+                Apply Now
+              </>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => onUseInGenerator(job)}
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm font-medium text-amber-300"
+          >
+            <Sparkles className="h-4 w-4" />
+            <span className="hidden sm:inline">Use in AI Builder</span>
+          </button>
+        </div>
         <p className="-mt-4 text-center text-[11px] text-zinc-600">
           Demo listing — applying here doesn&apos;t reach a real employer.
         </p>

@@ -97,6 +97,7 @@ export interface DemoEvent {
   startsAt: string;
   emoji: string;
   coverPhotoIds: string[];
+  recapPhotoIds: string[];
   attendeeCount: number;
   attendeeInitials: string[];
   capacity: number | null;
@@ -136,6 +137,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1543007630-9710e4a00a20',
       '1517457373958-b7bdd4587205',
     ],
+    recapPhotoIds: [
+      '1529156069898-49953e39b3ac',
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+    ],
     attendeeCount: 24,
     attendeeInitials: ['LF', 'JM', 'AK', 'SR'],
     capacity: 30,
@@ -159,6 +165,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1515187029135-18ee286d815b',
       '1556761175-5973dc0f32e7',
       '1573164713988-8665fc963095',
+    ],
+    recapPhotoIds: [
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+      '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 41,
     attendeeInitials: ['KM', 'PT', 'NV', 'HC'],
@@ -185,6 +196,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1517694712202-14dd9538aa97',
       '1531482615713-2afd69097998',
     ],
+    recapPhotoIds: [
+      '1529156069898-49953e39b3ac',
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+    ],
     attendeeCount: 63,
     attendeeInitials: ['DC', 'YW', 'RS', 'IL'],
     capacity: 80,
@@ -210,6 +226,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1502672023488-70e25813eb80',
       '1493246507139-91e8fad9978e',
     ],
+    recapPhotoIds: [
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+      '1524368535928-5b5e00ddc76b',
+    ],
     attendeeCount: 11,
     attendeeInitials: ['MB', 'OT', 'CS'],
     capacity: 15,
@@ -233,6 +254,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1551632811-561732d1e306',
       '1533240332313-0db49b459ad6',
       '1521737604893-d14cc237f11d',
+    ],
+    recapPhotoIds: [
+      '1529156069898-49953e39b3ac',
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
     ],
     attendeeCount: 18,
     attendeeInitials: ['SA', 'TR', 'EP'],
@@ -258,6 +284,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1522202176988-66273c2fd55f',
       '1523240795612-9a054b0db644',
     ],
+    recapPhotoIds: [
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+      '1524368535928-5b5e00ddc76b',
+    ],
     attendeeCount: 9,
     attendeeInitials: ['WZ', 'FL'],
     capacity: 15,
@@ -282,6 +313,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1529333166437-7750a6dd5a70',
       '1414235077428-338989a2e8c0',
     ],
+    recapPhotoIds: [
+      '1529156069898-49953e39b3ac',
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+    ],
     attendeeCount: 35,
     attendeeInitials: ['FZ', 'GM', 'AB', 'NK'],
     capacity: 40,
@@ -305,6 +341,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1470229722913-7c0e2dbbafd3',
       '1470225620780-dba8ba36b745',
       '1533174072545-7a4b6ad7a6c3',
+    ],
+    recapPhotoIds: [
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+      '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 87,
     attendeeInitials: ['ES', 'JB', 'LT', 'PK'],
@@ -331,6 +372,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1553778263-73a83bab9b0c',
       '1552667466-07770ae110d0',
     ],
+    recapPhotoIds: [
+      '1529156069898-49953e39b3ac',
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+    ],
     attendeeCount: 14,
     attendeeInitials: ['TR', 'MK'],
     capacity: 20,
@@ -354,6 +400,11 @@ export const DEMO_EVENTS: DemoEvent[] = [
       '1524995997946-a1c2e315a42f',
       '1524178232363-1fb2b075b655',
       '1475721027785-f74eccf877e2',
+    ],
+    recapPhotoIds: [
+      '1541532713592-79a0317b6b77',
+      '1543269664-76bc3997d9ea',
+      '1524368535928-5b5e00ddc76b',
     ],
     attendeeCount: 22,
     attendeeInitials: ['CS', 'TB'],
@@ -529,6 +580,7 @@ export interface DemoJob {
   description: string;
   requirements: string[];
   postedAt: string;
+  heroPhotoId: string;
 }
 
 const hoursAgoISO = (n: number) => new Date(Date.now() - n * 3_600_000).toISOString();
@@ -555,6 +607,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Conversational German (B1) for team stand-ups',
     ],
     postedAt: hoursAgoISO(3),
+    heroPhotoId: '1522071820081-009f0129c71c',
   },
   {
     id: 'demo-job-barista-minijob-munich',
@@ -577,6 +630,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Food handling certificate (we can help you get one)',
     ],
     postedAt: hoursAgoISO(20),
+    heroPhotoId: '1521017432531-fbd92d768814',
   },
   {
     id: 'demo-job-marketing-werkstudent-hamburg',
@@ -599,6 +653,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Familiarity with Instagram/TikTok content creation',
     ],
     postedAt: hoursAgoISO(48),
+    heroPhotoId: '1497366216548-37526070297c',
   },
   {
     id: 'demo-job-warehouse-minijob-cologne',
@@ -621,6 +676,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Reliable and punctual',
     ],
     postedAt: hoursAgoISO(72),
+    heroPhotoId: '1553413077-190dd305871c',
   },
   {
     id: 'demo-job-data-analyst-remote',
@@ -643,6 +699,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'No German required — team language is English',
     ],
     postedAt: hoursAgoISO(6),
+    heroPhotoId: '1499951360447-b19be8fe80f5',
   },
   {
     id: 'demo-job-tutor-minijob-frankfurt',
@@ -665,6 +722,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Patient, encouraging teaching style',
     ],
     postedAt: hoursAgoISO(30),
+    heroPhotoId: '1524995997946-a1c2e315a42f',
   },
   {
     id: 'demo-job-ux-werkstudent-berlin',
@@ -687,6 +745,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Comfortable in Figma',
     ],
     postedAt: hoursAgoISO(15),
+    heroPhotoId: '1517694712202-14dd9538aa97',
   },
   {
     id: 'demo-job-delivery-minijob-munich',
@@ -709,6 +768,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Smartphone for the delivery app',
     ],
     postedAt: hoursAgoISO(10),
+    heroPhotoId: '1571771894821-ce9b6c11b08e',
   },
   {
     id: 'demo-job-support-werkstudent-remote',
@@ -731,6 +791,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'No German required — support queue is English-only',
     ],
     postedAt: hoursAgoISO(1),
+    heroPhotoId: '1532094349884-543bc11b234d',
   },
   {
     id: 'demo-job-reception-minijob-hamburg',
@@ -753,6 +814,7 @@ export const DEMO_JOBS: DemoJob[] = [
       'Comfortable with guest-facing work',
     ],
     postedAt: hoursAgoISO(55),
+    heroPhotoId: '1445019980597-93fa8acb246c',
   },
 ];
 

@@ -7,12 +7,14 @@ import { JobCard } from '@/components/jobs/job-card';
 import { JobModal } from '@/components/jobs/job-modal';
 import { JobFilters, DEFAULT_JOB_FILTERS, type JobFiltersState } from '@/components/jobs/job-filters';
 import { PortalLinksWidget } from '@/components/jobs/portal-links-widget';
+import { AiCareerBuilder } from '@/components/jobs/ai-career-builder';
 
 const CITY_ORDER = ['Berlin', 'Munich', 'Hamburg', 'Frankfurt', 'Cologne', 'Remote'];
 
 export default function JobsPage() {
   const [filters, setFilters] = useState<JobFiltersState>(DEFAULT_JOB_FILTERS);
   const [activeJob, setActiveJob] = useState<DemoJob | null>(null);
+  const [prefillJob, setPrefillJob] = useState<DemoJob | null>(null);
 
   const cities = useMemo(() => {
     const present = new Set(DEMO_JOBS.map((j) => j.city));
@@ -24,9 +26,16 @@ export default function JobsPage() {
       if (filters.category && job.category !== filters.category) return false;
       if (filters.englishOnly && job.germanLevel !== 'english_only') return false;
       if (filters.city && job.city !== filters.city) return false;
+      if (job.hourlyRateMax < filters.minHourlyRate) return false;
       return true;
     }).sort((a, b) => a.postedAt.localeCompare(b.postedAt) * -1);
   }, [filters]);
+
+  function handleUseInGenerator(job: DemoJob) {
+    setActiveJob(null);
+    setPrefillJob(job);
+    document.getElementById('ai-career-builder')?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
@@ -69,7 +78,11 @@ export default function JobsPage() {
         </aside>
       </div>
 
-      <JobModal job={activeJob} onClose={() => setActiveJob(null)} />
+      <div id="ai-career-builder" className="mt-6 scroll-mt-24">
+        <AiCareerBuilder prefillJob={prefillJob} />
+      </div>
+
+      <JobModal job={activeJob} onClose={() => setActiveJob(null)} onUseInGenerator={handleUseInGenerator} />
     </div>
   );
 }

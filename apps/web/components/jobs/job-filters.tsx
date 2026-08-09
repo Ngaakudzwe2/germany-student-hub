@@ -5,12 +5,14 @@ export interface JobFiltersState {
   category: JobCategory | null;
   englishOnly: boolean;
   city: string | null;
+  minHourlyRate: number;
 }
 
 export const DEFAULT_JOB_FILTERS: JobFiltersState = {
   category: null,
   englishOnly: false,
   city: null,
+  minHourlyRate: 14,
 };
 
 interface JobFiltersProps {
@@ -54,6 +56,20 @@ export function JobFilters({ filters, onChange, cities }: JobFiltersProps) {
             {city}
           </Pill>
         ))}
+      </div>
+
+      <div className="flex items-center gap-3">
+        <span className="w-24 shrink-0 text-xs font-medium text-zinc-500">Hourly pay</span>
+        <input
+          type="range"
+          min={14}
+          max={22}
+          step={1}
+          value={filters.minHourlyRate}
+          onChange={(e) => onChange({ ...filters, minHourlyRate: Number(e.target.value) })}
+          className="max-w-xs flex-1 accent-emerald-400"
+        />
+        <span className="w-16 text-xs text-zinc-300">€{filters.minHourlyRate}+/hr</span>
       </div>
     </div>
   );
