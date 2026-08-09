@@ -85,7 +85,7 @@ export default function MobilePreviewPage() {
                 <p className="text-xs font-medium text-zinc-100">{event.title}</p>
                 <p className="mt-0.5 flex items-center gap-1 text-[11px] text-zinc-500">
                   <Calendar className="h-3 w-3" />
-                  {new Date(event.startsAt).toLocaleDateString(undefined, {
+                  {new Date(event.startsAt).toLocaleDateString('en-US', {
                     weekday: 'short',
                     month: 'short',
                     day: 'numeric',

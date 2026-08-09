@@ -1,0 +1,117 @@
+'use client';
+
+import { useState } from 'react';
+import { Check, Clock, ListChecks, MapPin, Send } from 'lucide-react';
+import type { DemoJob } from '@/lib/demo-data';
+import { GERMAN_LEVEL_LABELS, JOB_CATEGORY_LABELS } from '@/lib/job-meta';
+import { avatarColor } from '@/lib/event-meta';
+import { Modal } from '@/components/ui/modal';
+import { useToast } from '@/components/ui/toast';
+
+interface JobModalProps {
+  job: DemoJob | null;
+  onClose: () => void;
+}
+
+export function JobModal({ job, onClose }: JobModalProps) {
+  const [applied, setApplied] = useState(false);
+  const { showToast } = useToast();
+
+  if (!job) return null;
+
+  function handleApply() {
+    setApplied(true);
+    showToast(`Application sent to ${job!.company} (demo)`);
+  }
+
+  return (
+    <Modal open={!!job} onClose={onClose} title={job.title} subtitle={job.company}>
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <span
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-white ${avatarColor(job.company)}`}
+          >
+            {job.companyInitial}
+          </span>
+          <div className="min-w-0">
+            <p className="font-medium text-zinc-100">{job.company}</p>
+            <p className="flex items-center gap-1 text-xs text-zinc-500">
+              <MapPin className="h-3 w-3" />
+              {job.city}
+              {job.remote ? ' · Remote' : ''}
+              <span className="mx-0.5">·</span>
+              <Clock className="h-3 w-3" />
+              {job.hoursPerWeek}
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p className="text-sm font-semibold text-zinc-50">
+              €{job.hourlyRateMin}
+              {job.hourlyRateMax !== job.hourlyRateMin ? `–${job.hourlyRateMax}` : ''}
+            </p>
+            <p className="text-[10px] text-zinc-500">per hour</p>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p className="text-sm font-semibold text-zinc-50">
+              {GERMAN_LEVEL_LABELS[job.germanLevel]}
+            </p>
+            <p className="text-[10px] text-zinc-500">German level</p>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p className="text-sm font-semibold text-zinc-50">{JOB_CATEGORY_LABELS[job.category]}</p>
+            <p className="text-[10px] text-zinc-500">contract type</p>
+          </div>
+        </div>
+
+        <section>
+          <h3 className="mb-2 text-sm font-medium text-zinc-200">About the role</h3>
+          <p className="text-sm text-zinc-400">{job.description}</p>
+        </section>
+
+        <section>
+          <h3 className="mb-2 flex items-center gap-2 text-sm font-medium text-zinc-200">
+            <ListChecks className="h-4 w-4 text-emerald-400" />
+            Requirements
+          </h3>
+          <ul className="space-y-1.5">
+            {job.requirements.map((req) => (
+              <li key={req} className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-zinc-600" />
+                {req}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <button
+          type="button"
+          onClick={handleApply}
+          disabled={applied}
+          className={`flex w-full items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold transition-colors ${
+            applied
+              ? 'bg-emerald-500/15 text-emerald-300'
+              : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950'
+          }`}
+        >
+          {applied ? (
+            <>
+              <Check className="h-4 w-4" />
+              Application Sent
+            </>
+          ) : (
+            <>
+              <Send className="h-4 w-4" />
+              Apply Now
+            </>
+          )}
+        </button>
+        <p className="-mt-4 text-center text-[11px] text-zinc-600">
+          Demo listing — applying here doesn&apos;t reach a real employer.
+        </p>
+      </div>
+    </Modal>
+  );
+}

@@ -128,7 +128,7 @@ export function HousingFeed() {
                   {listing.roomSizeSqm} m²
                   <span className="mx-1">·</span>
                   <Calendar className="h-3 w-3 shrink-0" />
-                  from {new Date(listing.moveInDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                  from {new Date(listing.moveInDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </p>
                 <div className="mt-auto flex items-center justify-between pt-1">
                   <span className="text-sm font-semibold text-zinc-50">€{listing.rentEur}/mo</span>

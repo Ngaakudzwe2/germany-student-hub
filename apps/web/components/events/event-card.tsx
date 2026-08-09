@@ -34,7 +34,7 @@ export function EventCard({ event }: { event: DemoEvent }) {
   }, [event.coverPhotoIds.length]);
 
   const date = new Date(event.startsAt);
-  const dateLabel = date.toLocaleDateString(undefined, {
+  const dateLabel = date.toLocaleDateString('en-US', {
     weekday: 'short',
     month: 'short',
     day: 'numeric',

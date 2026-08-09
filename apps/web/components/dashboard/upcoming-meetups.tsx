@@ -27,7 +27,7 @@ export function UpcomingMeetups({ limit = 3 }: { limit?: number }) {
 
       <ul className="space-y-1 p-2">
         {events.map((event) => {
-          const dateLabel = new Date(event.startsAt).toLocaleDateString(undefined, {
+          const dateLabel = new Date(event.startsAt).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
           });

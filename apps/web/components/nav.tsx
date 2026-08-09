@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { Bell, Building2, GraduationCap, LayoutDashboard, Users } from 'lucide-react';
+import { Bell, Briefcase, Building2, GraduationCap, LayoutDashboard, Users } from 'lucide-react';
 import { HubPlusTrigger } from '@/components/premium/hub-plus-trigger';
 
 const LINKS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/accommodation', label: 'Accommodation', icon: Building2 },
   { href: '/meetups', label: 'Meetups', icon: Users },
+  { href: '/jobs', label: 'Jobs', icon: Briefcase },
 ];
 
 export function Nav() {

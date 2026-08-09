@@ -61,7 +61,7 @@ export function PropertyModal({ listing, onClose, onGenerateLetter }: PropertyMo
           <div className="rounded-lg border border-white/10 bg-white/[0.03] py-2">
             <p className="flex items-center justify-center gap-1 text-sm font-semibold text-zinc-50">
               <Calendar className="h-3.5 w-3.5" />
-              {new Date(listing.moveInDate).toLocaleDateString(undefined, {
+              {new Date(listing.moveInDate).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
               })}

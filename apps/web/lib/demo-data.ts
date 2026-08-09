@@ -510,6 +510,252 @@ export const DEMO_LISTINGS: DemoListing[] = [
   },
 ];
 
+export type JobCategory = 'werkstudent' | 'minijob';
+export type GermanLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'english_only';
+
+export interface DemoJob {
+  id: string;
+  title: string;
+  company: string;
+  companyInitial: string;
+  category: JobCategory;
+  city: string;
+  remote: boolean;
+  hourlyRateMin: number;
+  hourlyRateMax: number;
+  germanLevel: GermanLevel;
+  hoursPerWeek: string;
+  tags: string[];
+  description: string;
+  requirements: string[];
+  postedAt: string;
+}
+
+const hoursAgoISO = (n: number) => new Date(Date.now() - n * 3_600_000).toISOString();
+
+export const DEMO_JOBS: DemoJob[] = [
+  {
+    id: 'demo-job-swe-werkstudent-berlin',
+    title: 'Werkstudent Software Engineer',
+    company: 'TechFlow GmbH',
+    companyInitial: 'TF',
+    category: 'werkstudent',
+    city: 'Berlin',
+    remote: false,
+    hourlyRateMin: 18,
+    hourlyRateMax: 22,
+    germanLevel: 'B1',
+    hoursPerWeek: 'Up to 20 hrs/week',
+    tags: ['Tech', 'React', 'Hybrid'],
+    description:
+      'Join our product engineering team building the next generation of our B2B SaaS platform. Work alongside senior engineers on real features shipping to production, with flexible hours around your semester schedule.',
+    requirements: [
+      'Enrolled at a German university (Werkstudent visa requirement)',
+      'Experience with React or a similar frontend framework',
+      'Conversational German (B1) for team stand-ups',
+    ],
+    postedAt: hoursAgoISO(3),
+  },
+  {
+    id: 'demo-job-barista-minijob-munich',
+    title: 'Barista (Minijob)',
+    company: 'Café Glück',
+    companyInitial: 'CG',
+    category: 'minijob',
+    city: 'Munich',
+    remote: false,
+    hourlyRateMin: 14,
+    hourlyRateMax: 14,
+    germanLevel: 'A2',
+    hoursPerWeek: 'Up to 10 hrs/week',
+    tags: ['Hospitality', 'Weekend shifts'],
+    description:
+      'Cozy neighborhood café looking for a friendly barista for weekend and evening shifts. Training provided — no prior barista experience required, just a great attitude with customers.',
+    requirements: [
+      'Basic German for taking orders (A2)',
+      'Available Saturday and Sunday mornings',
+      'Food handling certificate (we can help you get one)',
+    ],
+    postedAt: hoursAgoISO(20),
+  },
+  {
+    id: 'demo-job-marketing-werkstudent-hamburg',
+    title: 'Werkstudent Marketing & Social Media',
+    company: 'NordMedia',
+    companyInitial: 'NM',
+    category: 'werkstudent',
+    city: 'Hamburg',
+    remote: false,
+    hourlyRateMin: 16,
+    hourlyRateMax: 19,
+    germanLevel: 'B2',
+    hoursPerWeek: 'Up to 20 hrs/week',
+    tags: ['Marketing', 'Social Media'],
+    description:
+      'Support our content and social media team creating campaigns for regional clients. Great fit for marketing or communications students who want real portfolio work.',
+    requirements: [
+      'Enrolled at a German university',
+      'Strong written German (B2) for client-facing copy',
+      'Familiarity with Instagram/TikTok content creation',
+    ],
+    postedAt: hoursAgoISO(48),
+  },
+  {
+    id: 'demo-job-warehouse-minijob-cologne',
+    title: 'Warehouse Assistant (Minijob)',
+    company: 'LogistikPlus',
+    companyInitial: 'LP',
+    category: 'minijob',
+    city: 'Cologne',
+    remote: false,
+    hourlyRateMin: 13,
+    hourlyRateMax: 13,
+    germanLevel: 'A1',
+    hoursPerWeek: 'Up to 12 hrs/week',
+    tags: ['Warehouse', 'Flexible hours'],
+    description:
+      'Pick-and-pack work in a modern, climate-controlled warehouse near Cologne. Flexible shift scheduling around exams — just give us your availability each week.',
+    requirements: [
+      'Basic German instructions understanding (A1)',
+      'Able to stand and lift up to 10kg',
+      'Reliable and punctual',
+    ],
+    postedAt: hoursAgoISO(72),
+  },
+  {
+    id: 'demo-job-data-analyst-remote',
+    title: 'Werkstudent Data Analyst',
+    company: 'DataWorks AG',
+    companyInitial: 'DW',
+    category: 'werkstudent',
+    city: 'Remote',
+    remote: true,
+    hourlyRateMin: 20,
+    hourlyRateMax: 24,
+    germanLevel: 'english_only',
+    hoursPerWeek: 'Up to 20 hrs/week',
+    tags: ['Data', 'SQL', 'Remote', 'English Only'],
+    description:
+      'Fully remote role analyzing product usage data for our international engineering team. Team operates entirely in English — perfect if you\'re still building your German.',
+    requirements: [
+      'Enrolled at a German university',
+      'Comfortable with SQL and spreadsheet analysis',
+      'No German required — team language is English',
+    ],
+    postedAt: hoursAgoISO(6),
+  },
+  {
+    id: 'demo-job-tutor-minijob-frankfurt',
+    title: 'English Tutor (Minijob)',
+    company: 'LernZeit',
+    companyInitial: 'LZ',
+    category: 'minijob',
+    city: 'Frankfurt',
+    remote: false,
+    hourlyRateMin: 15,
+    hourlyRateMax: 18,
+    germanLevel: 'english_only',
+    hoursPerWeek: 'Up to 8 hrs/week',
+    tags: ['Tutoring', 'Education', 'English Only'],
+    description:
+      'Tutor secondary school students in conversational English, 1-on-1 or small groups. Sessions held at our Frankfurt learning center or online.',
+    requirements: [
+      'Native or near-native English fluency',
+      'No German required for this role',
+      'Patient, encouraging teaching style',
+    ],
+    postedAt: hoursAgoISO(30),
+  },
+  {
+    id: 'demo-job-ux-werkstudent-berlin',
+    title: 'Werkstudent UX/UI Designer',
+    company: 'PixelForge',
+    companyInitial: 'PF',
+    category: 'werkstudent',
+    city: 'Berlin',
+    remote: false,
+    hourlyRateMin: 19,
+    hourlyRateMax: 23,
+    germanLevel: 'B1',
+    hoursPerWeek: 'Up to 20 hrs/week',
+    tags: ['Design', 'Figma', 'Hybrid'],
+    description:
+      'Work directly with our product design lead on user research, wireframes, and high-fidelity prototypes for a fast-growing fintech app.',
+    requirements: [
+      'Enrolled at a German university',
+      'Portfolio showing UX process work',
+      'Comfortable in Figma',
+    ],
+    postedAt: hoursAgoISO(15),
+  },
+  {
+    id: 'demo-job-delivery-minijob-munich',
+    title: 'Delivery Rider (Minijob)',
+    company: 'QuickBite',
+    companyInitial: 'QB',
+    category: 'minijob',
+    city: 'Munich',
+    remote: false,
+    hourlyRateMin: 13,
+    hourlyRateMax: 15,
+    germanLevel: 'A2',
+    hoursPerWeek: 'Flexible, self-scheduled',
+    tags: ['Delivery', 'Flexible', 'Bike'],
+    description:
+      'Deliver food orders around central Munich on your own bike or e-bike (rental available). Fully flexible shift app — work as much or as little as you want.',
+    requirements: [
+      'Own bike or willingness to rent one',
+      'Basic German for reading addresses/instructions (A2)',
+      'Smartphone for the delivery app',
+    ],
+    postedAt: hoursAgoISO(10),
+  },
+  {
+    id: 'demo-job-support-werkstudent-remote',
+    title: 'Werkstudent Customer Support (English)',
+    company: 'CloudNest',
+    companyInitial: 'CN',
+    category: 'werkstudent',
+    city: 'Remote',
+    remote: true,
+    hourlyRateMin: 17,
+    hourlyRateMax: 20,
+    germanLevel: 'english_only',
+    hoursPerWeek: 'Up to 20 hrs/week',
+    tags: ['Customer Support', 'Remote', 'English Only'],
+    description:
+      'Help English-speaking customers via chat and email for our cloud storage product. Fully remote, async-friendly team spanning multiple time zones.',
+    requirements: [
+      'Enrolled at a German university',
+      'Excellent written English',
+      'No German required — support queue is English-only',
+    ],
+    postedAt: hoursAgoISO(1),
+  },
+  {
+    id: 'demo-job-reception-minijob-hamburg',
+    title: 'Front Desk Assistant (Minijob)',
+    company: 'Hotel Elbblick',
+    companyInitial: 'HE',
+    category: 'minijob',
+    city: 'Hamburg',
+    remote: false,
+    hourlyRateMin: 14,
+    hourlyRateMax: 14,
+    germanLevel: 'B1',
+    hoursPerWeek: 'Up to 10 hrs/week',
+    tags: ['Hospitality', 'Reception'],
+    description:
+      'Weekend front desk coverage at a boutique hotel near the harbor — check-ins, guest questions, and light admin work.',
+    requirements: [
+      'Conversational German and English (B1+)',
+      'Available Friday–Sunday',
+      'Comfortable with guest-facing work',
+    ],
+    postedAt: hoursAgoISO(55),
+  },
+];
+
 export interface DemoGuide {
   id: string;
   title: string;
