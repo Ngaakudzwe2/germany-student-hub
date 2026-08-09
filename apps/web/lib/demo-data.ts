@@ -72,6 +72,16 @@ export const DEMO_TASKS: DemoTask[] = [
       required_documents: ['Student ID'],
     },
   },
+  {
+    id: 'demo-task-tax-id',
+    status: 'not_started',
+    due_date: inDays(18),
+    task_templates: {
+      title: 'Tax Identification Number (Steuer-ID)',
+      category: 'Tax ID',
+      required_documents: ['Anmeldung certificate'],
+    },
+  },
 ];
 
 export type VenueType = 'online' | 'in_person';
@@ -376,6 +386,11 @@ export interface DemoListing {
   coverPhotoId: string;
   listedAt: string;
   verified: boolean;
+  description: string;
+  amenities: string[];
+  landlordName: string;
+  landlordEmail: string;
+  landlordPhone: string;
 }
 
 export const DEMO_LISTINGS: DemoListing[] = [
@@ -391,6 +406,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1484154218962-a197022b5858',
     listedAt: minutesAgoISO(6),
     verified: true,
+    description:
+      'Bright room in a friendly 3-person WG, five minutes from Hermannplatz U-Bahn. Shared kitchen renovated last year, quiet courtyard-facing window.',
+    amenities: ['WiFi included', 'Furnished', 'Washing machine', 'Bike storage', 'Courtyard view'],
+    landlordName: 'Julia Hoffmann',
+    landlordEmail: 'julia.hoffmann@example-wg.de',
+    landlordPhone: '+49 30 1234 5678',
   },
   {
     id: 'demo-listing-schwabing-studio',
@@ -404,6 +425,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1502672260266-1c1ef2d93688',
     listedAt: minutesAgoISO(42),
     verified: true,
+    description:
+      'Newly renovated studio steps from Münchner Freiheit U-Bahn. Compact kitchenette, own bathroom, elevator building.',
+    amenities: ['WiFi included', 'Furnished', 'Elevator', 'Dishwasher', 'Heating included'],
+    landlordName: 'Schwabing Wohnbau GmbH',
+    landlordEmail: 'vermietung@schwabing-wohnbau.example',
+    landlordPhone: '+49 89 9876 5432',
   },
   {
     id: 'demo-listing-ehrenfeld-wg',
@@ -417,6 +444,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1560448204-e02f11c3d0e2',
     listedAt: minutesAgoISO(130),
     verified: false,
+    description:
+      'Artsy WG in the heart of Ehrenfeld — three creatives and a cat. Big shared kitchen, regular flat dinners, close to nightlife.',
+    amenities: ['WiFi included', 'Furnished', 'Shared garden', 'Bike storage'],
+    landlordName: 'Marek Nowak',
+    landlordEmail: 'marek.n@example-wg.de',
+    landlordPhone: '+49 221 555 0192',
   },
   {
     id: 'demo-listing-sachsenhausen-apt',
@@ -430,6 +463,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1493809842364-78817add7ffb',
     listedAt: minutesAgoISO(300),
     verified: true,
+    description:
+      'Bright 1-bedroom with a small balcony overlooking a quiet street, 8-minute walk to the Main river promenade.',
+    amenities: ['WiFi included', 'Balcony', 'Furnished', 'Dishwasher', 'Underfloor heating'],
+    landlordName: 'Sachsenhausen Immobilien',
+    landlordEmail: 'kontakt@sachsenhausen-immo.example',
+    landlordPhone: '+49 69 4567 8901',
   },
   {
     id: 'demo-listing-sternschanze-wg',
@@ -443,6 +482,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1493663284031-b7e3aefcae8e',
     listedAt: minutesAgoISO(900),
     verified: false,
+    description:
+      'Room in a lively 4-person student WG near Sternschanze park, right by bars and the Saturday flea market.',
+    amenities: ['WiFi included', 'Bike storage', 'Washing machine', 'Shared rooftop terrace'],
+    landlordName: 'Finn Lindqvist',
+    landlordEmail: 'finn.l@example-wg.de',
+    landlordPhone: '+49 40 333 7799',
   },
   {
     id: 'demo-listing-mitte-apt',
@@ -456,6 +501,12 @@ export const DEMO_LISTINGS: DemoListing[] = [
     coverPhotoId: '1522708323590-d24dbb6b0267',
     listedAt: minutesAgoISO(1440),
     verified: true,
+    description:
+      'Renovated 2-room apartment on a quiet side street in Mitte, walking distance to Museum Island and Hackescher Markt.',
+    amenities: ['WiFi included', 'Furnished', 'Elevator', 'Dishwasher', 'Balcony'],
+    landlordName: 'Berlin Mitte Wohnungen',
+    landlordEmail: 'anfragen@mitte-wohnungen.example',
+    landlordPhone: '+49 30 8765 4321',
   },
 ];
 

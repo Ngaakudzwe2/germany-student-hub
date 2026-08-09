@@ -1,10 +1,11 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { ExternalLink, FileText, Languages, ListChecks, MapPin, Upload, X } from 'lucide-react';
+import { Check, Copy, ExternalLink, FileText, Languages, ListChecks, MapPin, Upload, X } from 'lucide-react';
 import type { TaskStatus } from '@repo/shared';
 import { Modal } from '@/components/ui/modal';
 import { getTaskDetail, STATUS_META, STATUS_ORDER } from '@/lib/task-meta';
+import { useToast } from '@/components/ui/toast';
 
 interface TaskModalProps {
   open: boolean;
@@ -27,11 +28,24 @@ export function TaskModal({
 }: TaskModalProps) {
   const detail = getTaskDetail(category);
   const [files, setFiles] = useState<string[]>([]);
+  const [copiedPhrase, setCopiedPhrase] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { showToast } = useToast();
 
   function handleFilesSelected(fileList: FileList | null) {
     if (!fileList) return;
     setFiles((prev) => [...prev, ...Array.from(fileList).map((f) => f.name)]);
+  }
+
+  async function copyPhrase(phrase: string) {
+    try {
+      await navigator.clipboard.writeText(phrase);
+      setCopiedPhrase(phrase);
+      showToast('Phrase copied to clipboard');
+      setTimeout(() => setCopiedPhrase((prev) => (prev === phrase ? null : prev)), 2000);
+    } catch {
+      showToast("Couldn't copy — select the text manually", 'info');
+    }
   }
 
   return (
@@ -135,10 +149,24 @@ export function TaskModal({
               {detail.phrases.map((phrase) => (
                 <div
                   key={phrase.de}
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2"
                 >
-                  <p className="text-sm font-medium text-zinc-100">{phrase.de}</p>
-                  <p className="text-xs text-zinc-500">{phrase.en}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-zinc-100">{phrase.de}</p>
+                    <p className="text-xs text-zinc-500">{phrase.en}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => copyPhrase(phrase.de)}
+                    className="shrink-0 rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-white/10 hover:text-zinc-200"
+                    aria-label={`Copy "${phrase.de}"`}
+                  >
+                    {copiedPhrase === phrase.de ? (
+                      <Check className="h-3.5 w-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5" />
+                    )}
+                  </button>
                 </div>
               ))}
             </div>

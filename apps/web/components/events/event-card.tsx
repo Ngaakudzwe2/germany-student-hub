@@ -13,6 +13,7 @@ import {
   unsplashUrl,
 } from '@/lib/event-meta';
 import { EVENT_TOPIC_LABELS } from '@/lib/demo-data';
+import { useToast } from '@/components/ui/toast';
 
 const CAROUSEL_INTERVAL_MS = 4000;
 const LOW_SPOTS_THRESHOLD = 8;
@@ -22,6 +23,7 @@ export function EventCard({ event }: { event: DemoEvent }) {
   const [attendeeCount, setAttendeeCount] = useState(event.attendeeCount);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [now] = useState(() => Date.now());
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (event.coverPhotoIds.length <= 1) return;
@@ -45,11 +47,13 @@ export function EventCard({ event }: { event: DemoEvent }) {
   const stateMeta = EVENT_STATE_META[state];
 
   function toggleRsvp() {
-    setAttending((prev) => {
-      const next = !prev;
-      setAttendeeCount((count) => count + (next ? 1 : -1));
-      return next;
-    });
+    const next = !attending;
+    setAttending(next);
+    setAttendeeCount((count) => count + (next ? 1 : -1));
+    showToast(
+      next ? `You're attending ${event.title} 🎉` : `RSVP cancelled for ${event.title}`,
+      next ? 'success' : 'info'
+    );
   }
 
   return (

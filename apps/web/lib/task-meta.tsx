@@ -6,6 +6,7 @@ import {
   FileWarning,
   HeartPulse,
   Landmark,
+  Receipt,
   Stamp,
   TrainFront,
   type LucideIcon,
@@ -18,6 +19,7 @@ export const CATEGORY_ICON: Record<string, LucideIcon> = {
   'Blocked Account': Landmark,
   'Visa Extension': Stamp,
   Transport: TrainFront,
+  'Tax ID': Receipt,
 };
 
 export const DEFAULT_CATEGORY_ICON: LucideIcon = Circle;
@@ -117,11 +119,14 @@ const TASK_DETAILS: Record<string, TaskDetail> = {
       { de: 'Ich brauche eine Krankenversicherung.', en: 'I need health insurance.' },
       { de: 'Ich bin Student/Studentin.', en: 'I am a student.' },
     ],
-    appointmentLabel: 'Compare insurance providers',
+    appointmentLabel: 'Sign up with an insurance provider',
     officialLinks: [
-      { label: 'TK (Techniker Krankenkasse)', href: 'https://www.tk.de/' },
-      { label: 'Barmer', href: 'https://www.barmer.de/' },
-      { label: 'AOK', href: 'https://www.aok.de/' },
+      {
+        label: 'TK (Techniker Krankenkasse)',
+        href: 'https://www.tk.de/techniker/service/mitgliedschaft/mitglied-werden-2007742',
+      },
+      { label: 'Barmer', href: 'https://www.barmer.de/mitglied-werden' },
+      { label: 'AOK', href: 'https://www.aok.de/pk/mitglied-werden/' },
     ],
   },
   'Blocked Account': {
@@ -169,6 +174,26 @@ const TASK_DETAILS: Record<string, TaskDetail> = {
     phrases: [{ de: 'Ein Semesterticket, bitte.', en: 'A semester ticket, please.' }],
     appointmentLabel: 'Buy transport ticket',
     officialLinks: [],
+  },
+  'Tax ID': {
+    location: 'Bundeszentralamt für Steuern (Federal Central Tax Office)',
+    steps: [
+      'No action needed at first — your Steuer-ID is generated automatically once your Anmeldung is processed.',
+      'It arrives by post 2–4 weeks after registering your address — keep the letter safe.',
+      "Didn't receive it? Request a duplicate online through the BZSt portal using your registered address.",
+      "You'll need this number for payroll, freelance invoicing, and opening some bank accounts.",
+    ],
+    phrases: [
+      { de: 'Ich habe meine Steuer-ID noch nicht erhalten.', en: "I haven't received my tax ID yet." },
+      { de: 'Können Sie mir meine Steuer-ID erneut zusenden?', en: 'Can you resend my tax ID to me?' },
+    ],
+    appointmentLabel: 'Look up or request your Steuer-ID',
+    officialLinks: [
+      {
+        label: 'BZSt — Steuerliche Identifikationsnummer',
+        href: 'https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html',
+      },
+    ],
   },
 };
 

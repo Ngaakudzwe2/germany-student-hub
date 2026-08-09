@@ -3,8 +3,9 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { BedDouble, Calendar, Home, MapPin, ShieldCheck } from 'lucide-react';
-import { DEMO_LISTINGS, type ListingType } from '@/lib/demo-data';
+import { DEMO_LISTINGS, type DemoListing, type ListingType } from '@/lib/demo-data';
 import { unsplashUrl } from '@/lib/event-meta';
+import { PropertyModal } from './property-modal';
 
 const TYPE_LABELS: Record<ListingType, string> = {
   wg_room: 'WG Room',
@@ -18,6 +19,12 @@ export function HousingFeed() {
   const [type, setType] = useState<ListingType | null>(null);
   const [maxRent, setMaxRent] = useState<number>(1400);
   const [now] = useState(() => Date.now());
+  const [activeListing, setActiveListing] = useState<DemoListing | null>(null);
+
+  function handleGenerateLetter() {
+    setActiveListing(null);
+    document.getElementById('wg-letter-generator')?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   const cities = useMemo(() => Array.from(new Set(DEMO_LISTINGS.map((l) => l.city))).sort(), []);
 
@@ -80,7 +87,11 @@ export function HousingFeed() {
           return (
             <div
               key={listing.id}
-              className="flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]"
+              role="button"
+              tabIndex={0}
+              onClick={() => setActiveListing(listing)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveListing(listing)}
+              className="flex cursor-pointer flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] transition-colors hover:border-white/20"
             >
               <div className="relative h-32 w-full overflow-hidden">
                 <Image
@@ -138,6 +149,12 @@ export function HousingFeed() {
           No listings match those filters. Try raising the max rent.
         </p>
       )}
+
+      <PropertyModal
+        listing={activeListing}
+        onClose={() => setActiveListing(null)}
+        onGenerateLetter={handleGenerateLetter}
+      />
     </div>
   );
 }

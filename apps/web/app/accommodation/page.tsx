@@ -28,7 +28,7 @@ export default function AccommodationPage() {
         <HousingFeed />
       </div>
 
-      <div className="mb-6">
+      <div id="wg-letter-generator" className="mb-6 scroll-mt-24">
         <WgLetterGenerator />
       </div>
 
