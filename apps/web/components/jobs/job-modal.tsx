@@ -109,7 +109,8 @@ export function JobModal({ job, onClose, onUseInGenerator }: JobModalProps) {
           </button>
         </div>
         <p className="-mt-4 text-center text-[11px] text-zinc-600">
-          Opens the employer&apos;s application portal in a new tab.
+          Demo listing — opens a real external job search platform in a new tab, not this
+          employer&apos;s own posting.
         </p>
       </div>
     </Modal>
