@@ -3,20 +3,16 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { BedDouble, Calendar, Home, MapPin, ShieldCheck } from 'lucide-react';
-import { DEMO_LISTINGS, type DemoListing, type ListingType } from '@/lib/demo-data';
+import { DEMO_LISTINGS, type DemoListing, type ListingCategory } from '@/lib/demo-data';
+import { CATEGORY_GROUPS, CATEGORY_ICON, CATEGORY_SHORT_LABELS } from '@/lib/housing-meta';
 import { unsplashUrl } from '@/lib/event-meta';
 import { PropertyModal } from './property-modal';
-
-const TYPE_LABELS: Record<ListingType, string> = {
-  wg_room: 'WG Room',
-  apartment: 'Apartment',
-};
 
 const LIVE_WINDOW_MINUTES = 15;
 
 export function HousingFeed() {
   const [city, setCity] = useState<string | null>(null);
-  const [type, setType] = useState<ListingType | null>(null);
+  const [category, setCategory] = useState<ListingCategory | null>(null);
   const [maxRent, setMaxRent] = useState<number>(1400);
   const [now] = useState(() => Date.now());
   const [activeListing, setActiveListing] = useState<DemoListing | null>(null);
@@ -31,11 +27,11 @@ export function HousingFeed() {
   const listings = useMemo(() => {
     return DEMO_LISTINGS.filter((listing) => {
       if (city && listing.city !== city) return false;
-      if (type && listing.type !== type) return false;
+      if (category && listing.type !== category) return false;
       if (listing.rentEur > maxRent) return false;
       return true;
     }).sort((a, b) => b.listedAt.localeCompare(a.listedAt));
-  }, [city, type, maxRent]);
+  }, [city, category, maxRent]);
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm">
@@ -48,23 +44,47 @@ export function HousingFeed() {
         </span>
       </div>
       <p className="mb-4 text-sm text-zinc-500">
-        Filterable feed of shared flats (WG) and apartments — new listings appear as they&apos;re
-        posted.
+        Filterable feed spanning the housing categories you&apos;d find across Berlinovo,
+        WG-Gesucht, Kleinanzeigen &amp; ImmoScout24 — new listings appear as they&apos;re posted.
       </p>
 
-      <div className="mb-5 flex flex-wrap items-center gap-2">
-        <PillGroup
-          options={cities}
-          active={city}
-          onSelect={setCity}
-        />
-        <PillGroup
-          options={Object.keys(TYPE_LABELS) as ListingType[]}
-          active={type}
-          onSelect={(value) => setType(value as ListingType | null)}
-          renderLabel={(v) => TYPE_LABELS[v as ListingType]}
-        />
-        <label className="ml-auto flex items-center gap-2 text-xs text-zinc-500">
+      <div className="mb-5 space-y-4">
+        <div>
+          <p className="mb-1.5 text-xs font-medium text-zinc-500">City</p>
+          <PillGroup options={cities} active={city} onSelect={setCity} />
+        </div>
+
+        <div className="space-y-3">
+          <p className="text-xs font-medium text-zinc-500">Housing Type</p>
+          {CATEGORY_GROUPS.map((group) => (
+            <div key={group.id}>
+              <p className="mb-1.5 text-[11px] text-zinc-600">{group.label}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {group.categories.map((cat) => {
+                  const Icon = CATEGORY_ICON[cat];
+                  const isActive = category === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setCategory(isActive ? null : cat)}
+                      className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        isActive
+                          ? 'border-orange-400/40 bg-orange-500/15 text-orange-300'
+                          : 'border-white/10 text-zinc-400 hover:border-white/20 hover:text-zinc-200'
+                      }`}
+                    >
+                      <Icon className="h-3 w-3" />
+                      {CATEGORY_SHORT_LABELS[cat]}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <label className="flex items-center gap-2 text-xs text-zinc-500">
           Max rent
           <input
             type="range"
@@ -73,7 +93,7 @@ export function HousingFeed() {
             step={50}
             value={maxRent}
             onChange={(e) => setMaxRent(Number(e.target.value))}
-            className="accent-orange-400"
+            className="max-w-xs flex-1 accent-orange-400"
           />
           <span className="w-14 text-zinc-300">€{maxRent}</span>
         </label>
@@ -103,7 +123,7 @@ export function HousingFeed() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
                 <span className="absolute top-2 left-2 rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
-                  {TYPE_LABELS[listing.type]}
+                  {CATEGORY_SHORT_LABELS[listing.type]}
                 </span>
                 {isJustListed && (
                   <span className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-semibold text-zinc-950">
@@ -163,12 +183,10 @@ function PillGroup({
   options,
   active,
   onSelect,
-  renderLabel,
 }: {
   options: string[];
   active: string | null;
   onSelect: (value: string | null) => void;
-  renderLabel?: (value: string) => string;
 }) {
   return (
     <div className="flex flex-wrap gap-1.5">
@@ -185,7 +203,7 @@ function PillGroup({
                 : 'border-white/10 text-zinc-400 hover:border-white/20 hover:text-zinc-200'
             }`}
           >
-            {renderLabel ? renderLabel(option) : option}
+            {option}
           </button>
         );
       })}

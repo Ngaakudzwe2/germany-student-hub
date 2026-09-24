@@ -538,12 +538,20 @@ function inDaysISO(n: number) {
 
 const minutesAgoISO = (n: number) => new Date(Date.now() - n * 60_000).toISOString();
 
-export type ListingType = 'wg_room' | 'apartment';
+export type ListingCategory =
+  | 'student_residence'
+  | 'wg_room'
+  | 'studio'
+  | 'apartment'
+  | 'sublet'
+  | 'private_room'
+  | 'micro_coliving'
+  | 'house';
 
 export interface DemoListing {
   id: string;
   title: string;
-  type: ListingType;
+  type: ListingCategory;
   city: string;
   district: string;
   rentEur: number;
@@ -582,7 +590,7 @@ export const DEMO_LISTINGS: DemoListing[] = [
   {
     id: 'demo-listing-schwabing-studio',
     title: 'Compact studio in Schwabing',
-    type: 'apartment',
+    type: 'studio',
     city: 'Munich',
     district: 'Schwabing',
     rentEur: 980,
@@ -673,6 +681,101 @@ export const DEMO_LISTINGS: DemoListing[] = [
     landlordName: 'Berlin Mitte Wohnungen',
     landlordEmail: 'anfragen@mitte-wohnungen.example',
     landlordPhone: '+49 30 8765 4321',
+  },
+  {
+    id: 'demo-listing-berlinovo-residence',
+    title: 'Berlinovo Student Residence — single room',
+    type: 'student_residence',
+    city: 'Berlin',
+    district: 'Adlershof',
+    rentEur: 450,
+    roomSizeSqm: 18,
+    moveInDate: inDays(20),
+    coverPhotoId: '1555854877-bab0e564b8d5',
+    listedAt: minutesAgoISO(60),
+    verified: true,
+    description:
+      'Furnished single room in a Berlinovo-managed student residence near Adlershof campus. Shared kitchen per floor, on-site laundry, 24h reception.',
+    amenities: ['WiFi included', 'Furnished', 'Laundry room', 'Bike storage', '24h reception'],
+    landlordName: 'Berlinovo Wohnungsgesellschaft',
+    landlordEmail: 'vermietung@berlinovo.example',
+    landlordPhone: '+49 30 2345 6789',
+  },
+  {
+    id: 'demo-listing-schwabing-sublet',
+    title: 'Furnished sublet, 4 months (Zwischenmiete)',
+    type: 'sublet',
+    city: 'Munich',
+    district: 'Maxvorstadt',
+    rentEur: 850,
+    roomSizeSqm: 24,
+    moveInDate: inDays(3),
+    coverPhotoId: '1600585154340-be6161a56a0c',
+    listedAt: minutesAgoISO(25),
+    verified: false,
+    description:
+      'Subletting my furnished room while I\'m on exchange abroad — available for 4 months, flexible on exact dates. Everything included, just bring a suitcase.',
+    amenities: ['WiFi included', 'Fully furnished', 'All bills included', 'Washing machine'],
+    landlordName: 'Petra Wagner',
+    landlordEmail: 'petra.w@example-sublet.de',
+    landlordPhone: '+49 89 2233 4455',
+  },
+  {
+    id: 'demo-listing-hamburg-private-room',
+    title: 'Private room in family home (Kleinanzeigen)',
+    type: 'private_room',
+    city: 'Hamburg',
+    district: 'Eimsbüttel',
+    rentEur: 480,
+    roomSizeSqm: 13,
+    moveInDate: inDays(12),
+    coverPhotoId: '1615529182904-14819c35db37',
+    listedAt: minutesAgoISO(200),
+    verified: false,
+    description:
+      'Quiet room in our family home, listed directly — no agency. Own key, shared bathroom with one other lodger, quiet residential street.',
+    amenities: ['WiFi included', 'Furnished', 'Garden access', 'Quiet street'],
+    landlordName: 'Familie Brandt',
+    landlordEmail: 'brandt.family@example.de',
+    landlordPhone: '+49 40 6677 8899',
+  },
+  {
+    id: 'demo-listing-frankfurt-coliving',
+    title: 'Micro-apartment in a co-living building',
+    type: 'micro_coliving',
+    city: 'Frankfurt',
+    district: 'Bockenheim',
+    rentEur: 720,
+    roomSizeSqm: 20,
+    moveInDate: inDays(15),
+    coverPhotoId: '1554995207-c18c203602cb',
+    listedAt: minutesAgoISO(80),
+    verified: true,
+    description:
+      'Private micro-studio inside a co-living building with shared lounge, coworking space, and weekly community events — move-in ready, all-inclusive rent.',
+    amenities: ['WiFi included', 'Coworking space', 'Community events', 'All bills included', 'Gym access'],
+    landlordName: 'Bockenheim Co-Living GmbH',
+    landlordEmail: 'hello@bockenheim-coliving.example',
+    landlordPhone: '+49 69 5544 3322',
+  },
+  {
+    id: 'demo-listing-cologne-house',
+    title: 'Room in shared terraced house (Reihenhaus)',
+    type: 'house',
+    city: 'Cologne',
+    district: 'Sülz',
+    rentEur: 610,
+    roomSizeSqm: 17,
+    moveInDate: inDays(25),
+    coverPhotoId: '1570129477492-45c003edd2be',
+    listedAt: minutesAgoISO(500),
+    verified: true,
+    description:
+      'Room in a terraced house shared with two PhD students, small private garden, quiet family neighborhood close to the university sports fields.',
+    amenities: ['WiFi included', 'Furnished', 'Private garden', 'Washing machine', 'Bike storage'],
+    landlordName: 'Sülz Wohngemeinschaft',
+    landlordEmail: 'suelz.wg@example.de',
+    landlordPhone: '+49 221 7788 9900',
   },
 ];
 
