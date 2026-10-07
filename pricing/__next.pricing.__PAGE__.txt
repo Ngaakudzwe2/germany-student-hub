@@ -1,0 +1,22 @@
+1:"$Sreact.fragment"
+2:I[5014,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"default"]
+3:I[42756,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"HubPlusPricing"]
+4:I[97367,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+9:I[97367,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"ViewportBoundary"]
+a:I[97367,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"MetadataBoundary"]
+b:I[27201,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"IconMark"]
+d:I[39756,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"default"]
+e:I[37457,["/germany-student-hub/_next/static/chunks/3fntmmi971322.js","/germany-student-hub/_next/static/chunks/2izstnnwqoj2c.js"],"default"]
+8:X
+10:X
+10:C
+0:{"buildId":"n36Wy16-BZvGLzhtLVAp5","data":[{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"mx-auto max-w-2xl px-4 py-12 sm:px-6","children":[["$","div",null,{"className":"mb-8 text-center","children":[["$","span",null,{"className":"mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500","children":["$","$L2",null,{"iconNode":[["path",{"d":"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z","key":"1vdc57"}],["path",{"d":"M5 21h14","key":"11awu3"}]],"className":"lucide-crown h-6 w-6 text-zinc-950"}]}],["$","h1",null,{"className":"text-2xl font-semibold text-zinc-50 sm:text-3xl","children":"Hub+ Pass"}],["$","p",null,{"className":"mt-2 text-sm text-zinc-400","children":"One plan, everything unlocked. Start with a 7-day free trial, cancel anytime."}]]}],["$","div",null,{"className":"rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm","children":["$","$L3",null,{}]}]]}],null,["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L9",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$La",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"International Students Germany"}],["$","meta","1",{"name":"description","content":"Relocation checklist, accommodation guides, and student meetups for Germany."}],["$","link","2",{"rel":"icon","href":"/germany-student-hub/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$Lb","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@c","staleTime":"$8","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Ld",null,{"parallelRouterKey":"children","template":["$","$Le",null,{}]}]]}],"isPartial":"$@f","staleTime":"$8","varyParams":"$10"}],"isUpgradeableISRFallback":false,"a":"$@11","rootVaryParams":null,"needsRuntimeRequest":"$@12"}
+6:null
+12:true
+8:300
+8:C
+11:0
+c:"$undefined"
+f:"$undefined"
+7:"$undefined"
